@@ -41,7 +41,6 @@ export const App = () => {
           return { ...prev, [index]: {} };
         });
         return row.split(/;/).map((cell, i) => {
-          console.log(i, cell);
           return setData(prev => {
             switch (i) {
               case 0:
@@ -62,7 +61,7 @@ export const App = () => {
     }
   }, [file]);
 
-  // console.log(data);
+  console.log(data);
 
   return (
     <>
@@ -70,30 +69,15 @@ export const App = () => {
       <div id="preview">
         {file && (
           <table className="table">
-            <thead>
-              {file.split(/\r\n|\r|\n/).map((row, index) => {
-                if (!index > 0) {
-                  return (
-                    <tr key={index}>
-                      {row.split(/;/).map((cell, index) => {
-                        return <th key={index}>{cell}</th>;
-                      })}
-                    </tr>
-                  );
-                }
-              })}
-            </thead>
             <tbody>
               {file.split(/\r\n|\r|\n/).map((row, index) => {
-                if (index > 0) {
-                  return (
-                    <tr key={index}>
-                      {row.split(/;/).map((cell, index) => (
-                        <td key={index}>{cell}</td>
-                      ))}
-                    </tr>
-                  );
-                }
+                return (
+                  <tr key={index}>
+                    {row.split(/;/).map((cell, index) => (
+                      <td key={index}>{cell}</td>
+                    ))}
+                  </tr>
+                );
               })}
             </tbody>
           </table>
