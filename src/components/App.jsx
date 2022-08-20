@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import myFile from '../rrrd2.csv';
+import Question from './Question';
 
 const state = {
   questions: [],
   questionsIds: [],
 };
 
-// Регулярное выражение для проверки расширения файла.
 const REGEX = new RegExp('(.*?).(csv)$', 'i');
 
 export const App = () => {
   const [file, setFile] = useState(null);
   const [data, setData] = useState(state);
-  const [currentQuestion, setCurrentQuestion] = useState('');
+  const [currentQuestion, setCurrentQuestion] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,29 +28,16 @@ export const App = () => {
     fetchData();
   }, []);
 
-  // Функция, отрабатывающая при выборе файла.
   function handleFile(e) {
-    // Выбираем первый файл из списка файлов.
     const newFile = e.target.files[0];
 
-    // Если файл выбран и его расширение допустимо,
-    // то читаем его содержимое и отправляем
-    // в функцию отрисовки таблицы.
     if (newFile && REGEX.test(newFile.name)) {
-      // Создаем экземпляр объекта.
       const reader = new FileReader();
-
-      // Чтение файла асинхронное, поэтому
-      // создание таблицы привязываем к событию `load`,
-      // которое срабатывает при успешном завершении операции чтения.
       reader.onload = e => {
         setFile(e.target.result);
       };
-
-      // Читаем содержимое как текстовый файл.
       reader.readAsText(newFile);
     } else {
-      // Мизерная обработка ошибок.
       alert('Файл не выбран либо его формат не поддерживается.');
     }
   }
@@ -87,38 +74,28 @@ export const App = () => {
     }
   }, [file]);
 
-  useEffect(() => {
-    const hundlerQuestion = () => {
+  const startTask = () => {
+    let newQuestion = [];
+
+    for (let i = 1; newQuestion.length < 4; i += 1) {
       const currentIdx = Math.floor(
         Math.random() * (data.questionsIds.length - 1) + 1
       );
-
-      setCurrentQuestion(data.questions[currentIdx]?.eng);
-    };
-
-    hundlerQuestion();
-  }, [data]);
+      if (!newQuestion.includes(data.questions[currentIdx])) {
+        newQuestion = [...newQuestion, data.questions[currentIdx]];
+      }
+    }
+    setCurrentQuestion(newQuestion);
+  };
 
   return (
     <>
       <input type="file" name="readable" accept=".csv" onChange={handleFile} />
       <div id="preview">
-        {currentQuestion && currentQuestion}
-        {/* {file && (
-          <table className="table">
-            <tbody>
-              {file.split(/\r\n|\r|\n/).map((row, index) => {
-                return (
-                  <tr key={index}>
-                    {row.split(/;/).map((cell, index) => (
-                      <td key={index}>{cell}</td>
-                    ))}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )} */}
+        <button type="button" onClick={startTask}>
+          START
+        </button>
+        <Question question={currentQuestion} />
       </div>
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
