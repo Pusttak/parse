@@ -1,15 +1,29 @@
+import { useState, useEffect, useMemo } from 'react';
+
 const Question = ({ question }) => {
-  const questionList = [...question];
-  const currentIdx = Math.floor(Math.random() * (question.length - 1) + 1);
+  const [example, setExample] = useState(null);
 
-  for (let i = questionList.length - 1; i > 0; i -= 1) {
-    let j = Math.floor(Math.random() * (i + 1));
+  const currentIdx = useMemo(() => {
+    return Math.floor(Math.random() * (question.length - 1) + 1);
+  }, [question]);
 
-    [questionList[i], questionList[j]] = [questionList[j], questionList[i]];
-  }
+  const questionList = useMemo(() => {
+    return [...question];
+  }, [question]);
+
+  useEffect(() => {
+    setExample(null);
+    for (let i = questionList.length - 1; i > 0; i -= 1) {
+      let j = Math.floor(Math.random() * (i + 1));
+
+      [questionList[i], questionList[j]] = [questionList[j], questionList[i]];
+    }
+  }, [question, questionList]);
 
   const handleClick = id => {
-    console.log(question[currentIdx].id === id);
+    if (question[currentIdx].id === id) {
+      setExample(question[currentIdx].example);
+    }
   };
 
   return (
@@ -22,6 +36,7 @@ const Question = ({ question }) => {
           </button>
         );
       })}
+      <p>{example}</p>
     </>
   );
 };
