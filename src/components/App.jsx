@@ -1,12 +1,19 @@
 import { useState, useEffect } from 'react';
+import { nanoid } from 'nanoid';
 import myFile from '../rrrd2.csv';
+
+const state = {
+  questions: [],
+  questionsIds: [],
+};
 
 // Регулярное выражение для проверки расширения файла.
 const REGEX = new RegExp('(.*?).(csv)$', 'i');
 
 export const App = () => {
   const [file, setFile] = useState(null);
-  const [data, setData] = useState({});
+  const [data, setData] = useState(state);
+  const [currentQuestion, setCurrentQuestion] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,39 +57,54 @@ export const App = () => {
 
   useEffect(() => {
     if (file) {
-      setData({});
-      file.split(/\r\n|\r|\n/).map((row, index) => {
-        setData(prev => {
-          return { ...prev, [index]: {} };
+      file.split(/\r\n|\r|\n/).map(row => {
+        if (row === '') {
+          return null;
+        }
+        const id = nanoid(5);
+        const newQuestion = { id };
+
+        row.split(/;/).map((cell, i) => {
+          switch (i) {
+            case 0:
+              return (newQuestion.eng = cell);
+            case 1:
+              return (newQuestion.rus = cell);
+            case 2:
+              return (newQuestion.example = cell);
+            default:
+              return newQuestion;
+          }
         });
-        return row.split(/;/).map((cell, i) => {
-          return setData(prev => {
-            switch (i) {
-              case 0:
-                return { ...prev, [index]: { ...prev[index], eng: cell } };
-              case 1:
-                return { ...prev, [index]: { ...prev[index], ru: cell } };
-              case 2:
-                return {
-                  ...prev,
-                  [index]: { ...prev[index], example: cell },
-                };
-              default:
-                return { ...prev };
-            }
-          });
+        return setData(prev => {
+          return {
+            ...prev,
+            questions: [...prev.questions, newQuestion],
+            questionsIds: [...prev.questionsIds, id],
+          };
         });
       });
     }
   }, [file]);
 
-  console.log(data);
+  useEffect(() => {
+    const hundlerQuestion = () => {
+      const currentIdx = Math.floor(
+        Math.random() * (data.questionsIds.length - 1) + 1
+      );
+
+      setCurrentQuestion(data.questions[currentIdx]?.eng);
+    };
+
+    hundlerQuestion();
+  }, [data]);
 
   return (
     <>
       <input type="file" name="readable" accept=".csv" onChange={handleFile} />
       <div id="preview">
-        {file && (
+        {currentQuestion && currentQuestion}
+        {/* {file && (
           <table className="table">
             <tbody>
               {file.split(/\r\n|\r|\n/).map((row, index) => {
@@ -96,7 +118,7 @@ export const App = () => {
               })}
             </tbody>
           </table>
-        )}
+        )} */}
       </div>
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
