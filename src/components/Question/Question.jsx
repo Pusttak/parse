@@ -1,35 +1,33 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 const Question = ({ question }) => {
+  const [questionsList, setQuestionsList] = useState([]);
+  const [currentIdx, setCurrentIdx] = useState(null);
   const [example, setExample] = useState(null);
-
-  const currentIdx = useMemo(() => {
-    return Math.floor(Math.random() * (question.length - 1) + 1);
-  }, [question]);
-
-  const questionList = useMemo(() => {
-    return [...question];
-  }, [question]);
 
   useEffect(() => {
     setExample(null);
-    for (let i = questionList.length - 1; i > 0; i -= 1) {
+    const newQuestions = [...question];
+
+    for (let i = newQuestions.length - 1; i > 0; i -= 1) {
       let j = Math.floor(Math.random() * (i + 1));
 
-      [questionList[i], questionList[j]] = [questionList[j], questionList[i]];
+      [newQuestions[i], newQuestions[j]] = [newQuestions[j], newQuestions[i]];
     }
-  }, [question, questionList]);
+    setQuestionsList(newQuestions);
+    setCurrentIdx(Math.floor(Math.random() * (question.length - 1) + 1));
+  }, [question]);
 
   const handleClick = id => {
-    if (question[currentIdx].id === id) {
-      setExample(question[currentIdx].example);
+    if (questionsList[currentIdx].id === id) {
+      setExample(questionsList[currentIdx].example);
     }
   };
 
   return (
     <>
-      <p>{question[currentIdx]?.eng}</p>
-      {questionList.map(q => {
+      <p>{questionsList[currentIdx]?.eng}</p>
+      {questionsList.map(q => {
         return (
           <button onClick={() => handleClick(q.id)} key={q.id}>
             {q.rus}
