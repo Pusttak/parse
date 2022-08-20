@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import myFile from '../rrrd2.csv';
 
 // Регулярное выражение для проверки расширения файла.
 const REGEX = new RegExp('(.*?).(csv)$', 'i');
@@ -6,6 +7,19 @@ const REGEX = new RegExp('(.*?).(csv)$', 'i');
 export const App = () => {
   const [file, setFile] = useState(null);
   const [data, setData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resp = await fetch(myFile);
+        const text = await resp.text();
+        setFile(text);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   // Функция, отрабатывающая при выборе файла.
   function handleFile(e) {
@@ -36,6 +50,7 @@ export const App = () => {
 
   useEffect(() => {
     if (file) {
+      setData({});
       file.split(/\r\n|\r|\n/).map((row, index) => {
         setData(prev => {
           return { ...prev, [index]: {} };
@@ -61,7 +76,7 @@ export const App = () => {
     }
   }, [file]);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <>
