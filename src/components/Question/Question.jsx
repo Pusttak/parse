@@ -22,17 +22,26 @@ const Question = ({ question, startTask }) => {
 
   const handleClick = (e, id) => {
     if (!isActive) {
-      e.target.classList.add('isActive');
+      e.target.classList.add('active');
       if (questionsList[currentIdx].id === id) {
       } else {
+        const should = document.querySelector(
+          `[data-action=Q${questionsList[currentIdx].id}]`
+        );
+        should.classList.add('should');
       }
       setExample(questionsList[currentIdx].example);
       setIsActive(true);
 
       setTimeout(() => {
+        document.querySelector('.active').classList.remove('active');
+        const x = document.querySelector('.should');
+        if (x) {
+          x.classList.remove('should');
+        }
         startTask();
         setIsActive(false);
-      }, 3000);
+      }, 2000);
     }
   };
 
@@ -45,6 +54,7 @@ const Question = ({ question, startTask }) => {
             onClick={e => handleClick(e, q.id)}
             key={q.id}
             correct={questionsList[currentIdx].id === q.id}
+            data-action={`Q${q.id}`}
           >
             {q.rus}
           </Button>
