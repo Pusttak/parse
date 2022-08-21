@@ -95,7 +95,7 @@ export const App = () => {
         <button type="button" onClick={startTask}>
           START
         </button>
-        <Question question={currentQuestion} />
+        <Question question={currentQuestion} startTask={startTask} />
       </div>
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { Button } from './Question.styled';
 
-const Question = ({ question }) => {
+const Question = ({ question, startTask }) => {
   const [questionsList, setQuestionsList] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(null);
   const [example, setExample] = useState(null);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     setExample(null);
@@ -18,9 +20,19 @@ const Question = ({ question }) => {
     setCurrentIdx(Math.floor(Math.random() * (question.length - 1) + 1));
   }, [question]);
 
-  const handleClick = id => {
-    if (questionsList[currentIdx].id === id) {
+  const handleClick = (e, id) => {
+    if (!isActive) {
+      e.target.classList.add('isActive');
+      if (questionsList[currentIdx].id === id) {
+      } else {
+      }
       setExample(questionsList[currentIdx].example);
+      setIsActive(true);
+
+      setTimeout(() => {
+        startTask();
+        setIsActive(false);
+      }, 3000);
     }
   };
 
@@ -29,9 +41,13 @@ const Question = ({ question }) => {
       <p>{questionsList[currentIdx]?.eng}</p>
       {questionsList.map(q => {
         return (
-          <button onClick={() => handleClick(q.id)} key={q.id}>
+          <Button
+            onClick={e => handleClick(e, q.id)}
+            key={q.id}
+            correct={questionsList[currentIdx].id === q.id}
+          >
             {q.rus}
-          </button>
+          </Button>
         );
       })}
       <p>{example}</p>
