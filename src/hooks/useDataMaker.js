@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-import { nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
+
+const nanoid = customAlphabet(
+  'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+  8
+);
 
 const initialState = {
   questions: [],
@@ -16,7 +21,7 @@ export const useDataMaker = file => {
         if (row === '') {
           return null;
         }
-        const id = nanoid(5);
+        const id = nanoid();
         const newQuestion = { id, answerCounter: 0 };
 
         row.split(/;/).map((cell, idx) => {

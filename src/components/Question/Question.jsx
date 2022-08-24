@@ -40,7 +40,7 @@ const Question = ({ data, setData }) => {
         });
 
         const shouldAnswer = document.querySelector(
-          `[data-action=Q${correctAnswer}]`
+          `#${correctAnswer}`
         );
         shouldAnswer.classList.add('should');
       }
@@ -53,6 +53,7 @@ const Question = ({ data, setData }) => {
   const start = () => {
     document.querySelector('.active').classList.remove('active');
     const shouldAnswer = document.querySelector('.should');
+
     if (shouldAnswer) {
       shouldAnswer.classList.remove('should');
     }
@@ -73,7 +74,7 @@ const Question = ({ data, setData }) => {
             onClick={e => handleClick(e, answer.id)}
             key={answer.id}
             correct={currentQuestion.id === answer.id}
-            data-action={`Q${answer.id}`}
+            id={`${answer.id}`}
           >
             {answer.rus}
           </Button>
