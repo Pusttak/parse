@@ -70,7 +70,7 @@ const Question = ({ data, setData }) => {
   return (
     answerList.length > 0 && (
       <Box
-        p={5}
+        p={[2, 3, 5]}
         display="flex"
         flexDirection="column"
         alignItems="center"
@@ -84,7 +84,7 @@ const Question = ({ data, setData }) => {
           width={[1, 3 / 4, 1 / 2]}
           gap="8px"
           mb={5}
-          p={4}
+          p={[3, 4, 4]}
           bg="muted"
           borderRadius={2}
         >

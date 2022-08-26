@@ -45,3 +45,20 @@ img {
 .list {
   list-style: none;
 }
+
+a,
+img,
+button,
+input,
+textarea {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+input {
+  outline: none;
+}
+
+input,
+textarea {
+  -webkit-appearance: none;
+}
