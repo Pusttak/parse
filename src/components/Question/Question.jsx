@@ -81,7 +81,7 @@ const Question = ({ data, setData }) => {
           justifyContent="center"
           alignContent="flex-start"
           flexWrap="wrap"
-          width="45%"
+          width="50%"
           gap="8px"
           mb={5}
           p={4}

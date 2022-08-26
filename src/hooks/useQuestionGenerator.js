@@ -26,7 +26,7 @@ export const useQuestionGenerator = data => {
   useEffect(() => {
     if (currentQuestion) {
       let newAnswersList = [currentQuestion];
-      for (let i = 1; newAnswersList.length < 4; i += 1) {
+      for (let i = 1; newAnswersList.length < 6; i += 1) {
         const currentIdx = Math.floor(
           Math.random() * data.questions.length
         );
