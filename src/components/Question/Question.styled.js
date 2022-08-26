@@ -13,7 +13,7 @@ export const Answer = styled.button`
   font-weight: ${p => p.theme.fontWeights.body};
   color: ${p => p.theme.colors.title};
   background-color: transparent;
-  transition: ${p => p.theme.transitions[0]};
+
   padding: ${p => p.theme.space[3]}px ${p => p.theme.space[5]}px;
   border: solid 2px ${p => p.theme.colors.text};
   border-radius: ${p => p.theme.radii[2]}px;
@@ -28,12 +28,14 @@ export const Answer = styled.button`
       p.correct ? p.theme.colors.green : p.theme.colors.red};
     border: solid 2px
       ${p => (p.correct ? p.theme.colors.green : p.theme.colors.red)};
+    transition: ${p => p.theme.transitions[0]};
   }
 
   &.should {
     color: ${p => p.theme.colors.muted};
     background-color: ${p => p.theme.colors.yellow};
     border: solid 2px ${p => p.theme.colors.yellow};
+    transition: ${p => p.theme.transitions[0]};
   }
 `;
 

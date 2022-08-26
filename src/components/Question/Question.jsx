@@ -62,11 +62,9 @@ const Question = ({ data, setData }) => {
     setIsActive(false);
     // setExample(null);
 
-    setTimeout(() => {
-      setData(prev => {
-        return { ...prev };
-      });
-    }, 200);
+    setData(prev => {
+      return { ...prev };
+    });
   };
 
   return (
