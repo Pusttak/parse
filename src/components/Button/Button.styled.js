@@ -14,9 +14,23 @@ export const ButtonStyled = styled.button`
   border-radius: ${p => p.theme.radii[1]}px;
   transition: ${p => p.theme.transitions[0]};
   cursor: pointer;
+  overflow: hidden;
 
-  &:hover {
-    transform: scale(1.06);
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0;
+    height: 400%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: ${p => p.theme.transitions[0]};
+    transform: translate(0, -50%);
+  }
+
+  &:hover:hover:before {
+    width: 100%;
   }
 
   & svg {

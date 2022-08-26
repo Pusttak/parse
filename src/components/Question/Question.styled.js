@@ -26,11 +26,14 @@ export const Answer = styled.button`
   &.active {
     background-color: ${p =>
       p.correct ? p.theme.colors.green : p.theme.colors.red};
+    border: solid 2px
+      ${p => (p.correct ? p.theme.colors.green : p.theme.colors.red)};
   }
 
   &.should {
     color: ${p => p.theme.colors.muted};
     background-color: ${p => p.theme.colors.yellow};
+    border: solid 2px ${p => p.theme.colors.yellow};
   }
 `;
 
