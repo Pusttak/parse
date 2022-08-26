@@ -10,7 +10,7 @@ export const ButtonLoader = styled.label`
   color: ${p => p.theme.colors.muted};
   background-color: ${p => p.theme.colors.text};
   padding: ${p => p.theme.space[3]}px ${p => p.theme.space[4]}px;
-  border-radius: ${p => p.theme.radii[0]}px;
+  border-radius: ${p => p.theme.radii[1]}px;
   transition: ${p => p.theme.transitions[0]};
 
   &:hover {
