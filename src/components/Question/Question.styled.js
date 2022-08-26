@@ -1,16 +1,40 @@
 import styled from 'styled-components';
 
-export const Button = styled.button`
-  color: #000;
-  background-color: white;
-  transition: all 0.05s ease;
+export const Title = styled.p`
+  color: ${p => p.theme.colors.title};
+  font-size: ${p => p.theme.fontSizes[6]}px;
+  font-weight: ${p => p.theme.fontWeights.heading};
+  margin-bottom: ${p => p.theme.space[5]}px;
+`;
+
+export const Answer = styled.button`
+  font-family: inherit;
+  font-size: ${p => p.theme.fontSizes[2]}px;
+  font-weight: ${p => p.theme.fontWeights.body};
+  color: ${p => p.theme.colors.title};
+  background-color: transparent;
+  transition: ${p => p.theme.transitions[0]};
+  padding: ${p => p.theme.space[3]}px ${p => p.theme.space[5]}px;
+  border: solid 2px ${p => p.theme.colors.text};
+  border-radius: ${p => p.theme.radii[2]}px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${p => p.theme.colors.text};
+  }
 
   &.active {
-    color: #fff;
-    background-color: ${p => (p.correct ? 'green' : 'red')};
+    background-color: ${p =>
+      p.correct ? p.theme.colors.green : p.theme.colors.red};
   }
 
   &.should {
-    background-color: orange;
+    color: ${p => p.theme.colors.muted};
+    background-color: ${p => p.theme.colors.yellow};
   }
+`;
+
+export const Example = styled.p`
+  text-align: center;
+  margin-bottom: ${p => p.theme.space[5]}px;
 `;

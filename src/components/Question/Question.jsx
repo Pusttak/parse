@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { Button } from './Question.styled';
+import { MdOutlineNavigateNext } from 'react-icons/md';
+import { Title, Answer, Example } from './Question.styled';
 import { useQuestionGenerator, useAnswersMixer } from 'hooks';
+import Button from 'components/Button';
+import Box from 'components/Box';
 
 const Question = ({ data, setData }) => {
   const { currentQuestion, answerList } = useQuestionGenerator(data);
@@ -53,12 +56,11 @@ const Question = ({ data, setData }) => {
   const start = () => {
     document.querySelector('.active').classList.remove('active');
     const shouldAnswer = document.querySelector('.should');
-
     if (shouldAnswer) {
       shouldAnswer.classList.remove('should');
     }
     setIsActive(false);
-    setExample(null);
+    // setExample(null);
 
     setData(prev => {
       return { ...prev };
@@ -66,25 +68,50 @@ const Question = ({ data, setData }) => {
   };
 
   return (
-    <>
-      <p>{currentQuestion?.eng}</p>
-      {answerMixedList.map(answer => {
-        return (
-          <Button
-            onClick={e => handleClick(e, answer.id)}
-            key={answer.id}
-            correct={currentQuestion.id === answer.id}
-            id={`${answer.id}`}
-          >
-            {answer.rus}
-          </Button>
-        );
-      })}
-      <p>{example}</p>
-      <button type="button" onClick={start} disabled={!isActive}>
-        Next
-      </button>
-    </>
+    answerList.length > 0 && (
+      <Box
+        p={5}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+      >
+        <Title>{currentQuestion?.eng}</Title>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignContent="flex-start"
+          flexWrap="wrap"
+          width="45%"
+          gap="8px"
+          mb={5}
+          p={4}
+          bg="muted"
+          borderRadius={2}
+        >
+          {answerMixedList.map(answer => {
+            return (
+              <Answer
+                type="button"
+                onClick={e => handleClick(e, answer.id)}
+                key={answer.id}
+                correct={currentQuestion.id === answer.id}
+                id={`${answer.id}`}
+              >
+                {answer.rus}
+              </Answer>
+            );
+          })}
+        </Box>
+        {isActive && (
+          <>
+            <Example>{example}</Example>
+            <Button onClick={start} icon={MdOutlineNavigateNext}>
+              Next
+            </Button>
+          </>
+        )}
+      </Box>
+    )
   );
 };
 
