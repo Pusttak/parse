@@ -70,7 +70,7 @@ const Question = ({ data, setData }) => {
   return (
     answerList.length > 0 && (
       <Box
-        p={[2, 3, 5]}
+        p={[3, 4, 5]}
         display="flex"
         flexDirection="column"
         alignItems="center"
