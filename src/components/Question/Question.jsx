@@ -62,9 +62,11 @@ const Question = ({ data, setData }) => {
     setIsActive(false);
     // setExample(null);
 
-    setData(prev => {
-      return { ...prev };
-    });
+    setTimeout(() => {
+      setData(prev => {
+        return { ...prev };
+      });
+    }, 200);
   };
 
   return (
@@ -81,7 +83,7 @@ const Question = ({ data, setData }) => {
           justifyContent="center"
           alignContent="flex-start"
           flexWrap="wrap"
-          width="50%"
+          width={[1, 3 / 4, 1 / 2]}
           gap="8px"
           mb={5}
           p={4}
