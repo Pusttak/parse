@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FileLoader from './FileLoader';
 import Question from './Question';
 import Box from 'components/Box';
+import { useDataMaker } from 'hooks/useDataMaker';
 
 const App = () => {
-  const [data, setData] = useState(null);
+  const [state, setState] = useState(null);
+  const [newFile, setNewFile] = useState(null);
+  const data = useDataMaker(newFile);
+
+  useEffect(() => {
+    const localState = localStorage.getItem('questions');
+    localState ? setState(JSON.parse(localState)) : setState(data);
+  }, [data, setState]);
 
   return (
     <Box
@@ -17,8 +25,8 @@ const App = () => {
       color="text"
       bg="background"
     >
-      <FileLoader setData={setData} />
-      {data && <Question data={data} setData={setData} />}
+      <FileLoader setNewFile={setNewFile} />
+      {state && <Question state={state} setState={setState} />}
     </Box>
   );
 };

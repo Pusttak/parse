@@ -6,9 +6,9 @@ import SuccessIndicator from 'components/SuccessIndicator';
 import Button from 'components/Button';
 import Box from 'components/Box';
 
-const Question = ({ data, setData }) => {
+const Question = ({ state, setState }) => {
   const { currentQuestion, answerList, lastQuestions } =
-    useQuestionGenerator(data);
+    useQuestionGenerator(state);
   const answerMixedList = useAnswersMixer(answerList);
   const [example, setExample] = useState(null);
   const [isActive, setIsActive] = useState(false);
@@ -68,14 +68,14 @@ const Question = ({ data, setData }) => {
     }
     setIsActive(false);
     // setExample(null);
-    setData(prev => {
-      localStorage.setItem('questions', JSON.stringify(data));
+    setState(prev => {
+      localStorage.setItem('questions', JSON.stringify(state));
       return { ...prev };
     });
   };
 
   return (
-    answerList.length > 0 && (
+    currentQuestion && (
       <Box
         p={[3, 4, 5]}
         display="flex"
@@ -86,35 +86,37 @@ const Question = ({ data, setData }) => {
           {currentLang ? currentQuestion?.eng : currentQuestion?.rus}
         </Title>
         <SuccessIndicator
-          all={data.questions.length}
+          all={state.questions.length}
           last={lastQuestions.length}
         />
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignContent="flex-start"
-          flexWrap="wrap"
-          width={[1, 3 / 4, 1 / 2]}
-          gap="8px"
-          mb={5}
-          p={[3, 4, 4]}
-          bg="muted"
-          borderRadius={2}
-        >
-          {answerMixedList.map(answer => {
-            return (
-              <Answer
-                type="button"
-                onClick={e => handleClick(e, answer.id)}
-                key={answer.id}
-                correct={currentQuestion.id === answer.id}
-                id={`${answer.id}`}
-              >
-                {!currentLang ? answer.eng : answer.rus}
-              </Answer>
-            );
-          })}
-        </Box>
+        {answerList && (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignContent="flex-start"
+            flexWrap="wrap"
+            width={[1, 3 / 4, 1 / 2]}
+            gap="8px"
+            mb={5}
+            p={[3, 4, 4]}
+            bg="muted"
+            borderRadius={2}
+          >
+            {answerMixedList.map(answer => {
+              return (
+                <Answer
+                  type="button"
+                  onClick={e => handleClick(e, answer.id)}
+                  key={answer.id}
+                  correct={currentQuestion.id === answer.id}
+                  id={`${answer.id}`}
+                >
+                  {!currentLang ? answer.eng : answer.rus}
+                </Answer>
+              );
+            })}
+          </Box>
+        )}
         {isActive && (
           <>
             <Example>{example}</Example>
