@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { MdOutlineNavigateNext } from 'react-icons/md';
 import { Title, Answer, Example } from './Question.styled';
 import { useQuestionGenerator, useAnswersMixer } from 'hooks';
+import SuccessIndicator from 'components/SuccessIndicator';
 import Button from 'components/Button';
 import Box from 'components/Box';
 
 const Question = ({ data, setData }) => {
-  const { currentQuestion, answerList } = useQuestionGenerator(data);
+  const { currentQuestion, answerList, lastQuestions } =
+    useQuestionGenerator(data);
   const answerMixedList = useAnswersMixer(answerList);
   const [example, setExample] = useState(null);
   const [isActive, setIsActive] = useState(false);
@@ -61,8 +63,8 @@ const Question = ({ data, setData }) => {
     }
     setIsActive(false);
     // setExample(null);
-
     setData(prev => {
+      localStorage.setItem('questions', JSON.stringify(data));
       return { ...prev };
     });
   };
@@ -76,6 +78,10 @@ const Question = ({ data, setData }) => {
         alignItems="center"
       >
         <Title>{currentQuestion?.eng}</Title>
+        <SuccessIndicator
+          all={data.questions.length}
+          last={lastQuestions.length}
+        />
         <Box
           display="flex"
           justifyContent="center"

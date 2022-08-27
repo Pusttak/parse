@@ -8,7 +8,7 @@ const nanoid = customAlphabet(
 
 const initialState = {
   questions: [],
-  questionsIds: [],
+  // questionsIds: [],
 };
 
 export const useDataMaker = file => {
@@ -41,7 +41,7 @@ export const useDataMaker = file => {
           return {
             ...prev,
             questions: [...prev.questions, newQuestion],
-            questionsIds: [...prev.questionsIds, id],
+            // questionsIds: [...prev.questionsIds, id],
           };
         });
       });

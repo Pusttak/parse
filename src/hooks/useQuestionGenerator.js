@@ -40,5 +40,5 @@ export const useQuestionGenerator = data => {
     }
   }, [data, currentQuestion]);
 
-  return { currentQuestion, answerList };
+  return { currentQuestion, answerList, lastQuestions };
 };
