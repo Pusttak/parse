@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { MdOutlineNavigateNext } from 'react-icons/md';
 import { Title, Answer, Example } from './Question.styled';
 import { useQuestionGenerator, useAnswersMixer } from 'hooks';
@@ -12,6 +12,11 @@ const Question = ({ data, setData }) => {
   const answerMixedList = useAnswersMixer(answerList);
   const [example, setExample] = useState(null);
   const [isActive, setIsActive] = useState(false);
+
+  const currentLang = useMemo(
+    () => currentQuestion?.answerCounter % 2 === 0,
+    [currentQuestion]
+  );
 
   const handleClick = (e, id) => {
     if (!isActive) {
@@ -77,7 +82,9 @@ const Question = ({ data, setData }) => {
         flexDirection="column"
         alignItems="center"
       >
-        <Title>{currentQuestion?.eng}</Title>
+        <Title>
+          {currentLang ? currentQuestion?.eng : currentQuestion?.rus}
+        </Title>
         <SuccessIndicator
           all={data.questions.length}
           last={lastQuestions.length}
@@ -103,7 +110,7 @@ const Question = ({ data, setData }) => {
                 correct={currentQuestion.id === answer.id}
                 id={`${answer.id}`}
               >
-                {answer.rus}
+                {!currentLang ? answer.eng : answer.rus}
               </Answer>
             );
           })}

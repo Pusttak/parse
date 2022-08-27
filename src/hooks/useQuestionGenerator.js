@@ -1,27 +1,24 @@
 import { useState, useEffect, useMemo } from 'react';
 
 export const useQuestionGenerator = data => {
-  const [currentQuestion, setCurrentQuestion] = useState(null);
   const [answerList, setAnswerList] = useState([]);
-  // const [endList, setEndList] = useState(false);
   const lastQuestions = useMemo(
-    () => data.questions.filter(q => q.answerCounter < 3),
+    () => data.questions.filter(q => q.answerCounter < 6),
     [data]
   );
 
-  useEffect(() => {
-    if (lastQuestions.length > 0) {
-      // setEndList(false);
-
-      const currentIdx = Math.floor(
-        Math.random() * lastQuestions.length
-      );
-      setCurrentQuestion(lastQuestions[currentIdx]);
-    } else {
-      // alert('OVER');
-      // setEndList(true);
-    }
+  const currentQuestion = useMemo(() => {
+    const currentIdx = Math.floor(
+      Math.random() * lastQuestions.length
+    );
+    return lastQuestions[currentIdx];
   }, [lastQuestions]);
+
+  // useEffect(() => {
+  //   if (lastQuestions.length > 0) {
+  //   } else {
+  //   }
+  // }, [lastQuestions]);
 
   useEffect(() => {
     if (currentQuestion) {
@@ -36,6 +33,7 @@ export const useQuestionGenerator = data => {
           newAnswersList = [...newAnswersList, currentAnswer];
         }
       }
+
       setAnswerList(newAnswersList);
     }
   }, [data, currentQuestion]);
