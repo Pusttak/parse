@@ -5,6 +5,7 @@ export const Title = styled.p`
   font-size: ${p => p.theme.fontSizes[6]}px;
   font-weight: ${p => p.theme.fontWeights.heading};
   margin-bottom: ${p => p.theme.space[5]}px;
+  text-align: center;
 `;
 
 export const Answer = styled.button`
