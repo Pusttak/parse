@@ -3,6 +3,8 @@ import FileLoader from './FileLoader';
 import Question from './Question';
 import Box from 'components/Box';
 import { useDataMaker } from 'hooks/useDataMaker';
+import ApiGetFile from 'services/api';
+import myFile from 'data/rrrd2.csv';
 
 const App = () => {
   const [state, setState] = useState(null);
@@ -11,8 +13,22 @@ const App = () => {
 
   useEffect(() => {
     const localState = localStorage.getItem('questions');
-    localState ? setState(JSON.parse(localState)) : setState(data);
-  }, [data, setState]);
+    if (localState) {
+      setState(JSON.parse(localState));
+    } else {
+      if (!newFile) {
+        ApiGetFile(myFile).then(setNewFile);
+      } else {
+        setState(data);
+      }
+    }
+  }, [data, newFile]);
+
+  useEffect(() => {
+    if (state) {
+      localStorage.setItem('questions', JSON.stringify(state));
+    }
+  }, [state]);
 
   return (
     <Box

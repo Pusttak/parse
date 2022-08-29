@@ -69,7 +69,6 @@ const Question = ({ state, setState }) => {
     setIsActive(false);
     // setExample(null);
     setState(prev => {
-      localStorage.setItem('questions', JSON.stringify(state));
       return { ...prev };
     });
   };
