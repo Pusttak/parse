@@ -1,6 +1,6 @@
 import { IoMdCloudUpload } from 'react-icons/io';
 import { ButtonLoader } from './FileLoader.styled';
-import Box from 'components/Box';
+// import Box from 'components/Box';
 
 const REGEX = new RegExp('(.*?).(csv)$', 'i');
 
@@ -10,9 +10,12 @@ const FileLoader = ({ setNewFile }) => {
 
     if (uploadedFile && REGEX.test(uploadedFile.name)) {
       const reader = new FileReader();
-      localStorage.removeItem('questions');
+      // localStorage.removeItem('questions');
       reader.onload = e => {
-        setNewFile(e.target.result);
+        setNewFile({
+          name: uploadedFile.name.replace(/\..+$/, ''),
+          data: e.target.result,
+        });
       };
       reader.readAsText(uploadedFile);
     } else {
@@ -21,18 +24,16 @@ const FileLoader = ({ setNewFile }) => {
   }
 
   return (
-    <Box bg="muted" display="flex" justifyContent="flex-end" p={3}>
-      <ButtonLoader>
-        Upload File <IoMdCloudUpload />
-        <input
-          style={{ display: 'none' }}
-          type="file"
-          name="readable"
-          accept=".csv"
-          onChange={handleFile}
-        />
-      </ButtonLoader>
-    </Box>
+    <ButtonLoader>
+      Upload File <IoMdCloudUpload />
+      <input
+        style={{ display: 'none' }}
+        type="file"
+        name="readable"
+        accept=".csv"
+        onChange={handleFile}
+      />
+    </ButtonLoader>
   );
 };
 

@@ -1,34 +1,54 @@
 import { useState, useEffect } from 'react';
-import FileLoader from './FileLoader';
+import Menu from './Menu';
 import Question from './Question';
 import Box from 'components/Box';
-import { useDataMaker } from 'hooks/useDataMaker';
-import ApiGetFile from 'services/api';
-import myFile from 'data/rrrd2.csv';
+import { dataParse } from 'hooks/dataParse';
 
 const App = () => {
-  const [state, setState] = useState(null);
   const [newFile, setNewFile] = useState(null);
-  const data = useDataMaker(newFile);
+  const [state, setState] = useState(null);
 
   useEffect(() => {
-    const localState = localStorage.getItem('questions');
-    if (localState) {
-      setState(JSON.parse(localState));
-    } else {
-      if (!newFile) {
-        ApiGetFile(myFile).then(setNewFile);
+    if (newFile) {
+      const localData = localStorage.getItem('appState');
+      if (localData) {
+        const localState = JSON.parse(localData);
+        if (localState[newFile.name]) {
+          setState(localState[newFile.name]);
+        } else {
+          setState(dataParse(newFile.data));
+          localStorage.setItem(
+            'appState',
+            JSON.stringify({
+              ...localState,
+              [newFile.name]: [...dataParse(newFile.data)],
+            })
+          );
+        }
       } else {
-        setState(data);
+        setState(dataParse(newFile.data));
+        localStorage.setItem(
+          'appState',
+          JSON.stringify({
+            [newFile.name]: [...dataParse(newFile.data)],
+          })
+        );
       }
     }
-  }, [data, newFile]);
+  }, [newFile]);
 
   useEffect(() => {
     if (state) {
-      localStorage.setItem('questions', JSON.stringify(state));
+      const localState = JSON.parse(localStorage.getItem('appState'));
+      localStorage.setItem(
+        'appState',
+        JSON.stringify({
+          ...localState,
+          [newFile.name]: [...state],
+        })
+      );
     }
-  }, [state]);
+  }, [newFile, state]);
 
   return (
     <Box
@@ -41,8 +61,13 @@ const App = () => {
       color="text"
       bg="background"
     >
-      <FileLoader setNewFile={setNewFile} />
-      {state && <Question state={state} setState={setState} />}
+      <Menu setNewFile={setNewFile} />
+
+      {state ? (
+        <Question state={state} setState={setState} />
+      ) : (
+        'Choose an exercise to get started.'
+      )}
     </Box>
   );
 };

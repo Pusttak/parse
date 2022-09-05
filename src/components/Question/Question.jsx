@@ -69,7 +69,18 @@ const Question = ({ state, setState }) => {
     setIsActive(false);
     // setExample(null);
     setState(prev => {
-      return { ...prev };
+      // const localData = localStorage.getItem('appState');
+      // if (localData) {
+      // }
+      // const localState = JSON.parse(localData);
+      // localStorage.setItem(
+      //   'appState',
+      //   JSON.stringify({
+      //     ...localState,
+      //     [newFile.name]: [...dataParse(resp)],
+      //   })
+      // );
+      return [...prev];
     });
   };
 
@@ -85,7 +96,7 @@ const Question = ({ state, setState }) => {
           {currentLang ? currentQuestion?.eng : currentQuestion?.rus}
         </Title>
         <SuccessIndicator
-          all={state.questions.length}
+          all={state.length}
           last={lastQuestions.length}
         />
         {answerList && (

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ButtonStyled = styled.button`
   position: relative;
   display: flex;
-  align-items: center;
+  /* align-items: stretch; */
   font-family: inherit;
   font-size: ${p => p.theme.fontSizes[2]}px;
   font-weight: ${p => p.theme.fontWeights.body};
