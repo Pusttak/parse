@@ -1,15 +1,19 @@
 {
   "files": {
     "main.css": "/parse/static/css/main.e9122a5f.css",
-    "main.js": "/parse/static/js/main.a0f11a2d.js",
-    "static/media/rrrd2.csv": "/parse/static/media/rrrd2.c82037c88ddd5965c3e2.csv",
-    "static/media/test.csv": "/parse/static/media/test.5be32a5c98ca98ac952d.csv",
+    "main.js": "/parse/static/js/main.2825e13f.js",
+    "static/media/TopVerbs.csv": "/parse/static/media/TopVerbs.a209bf18e34e96734b50.csv",
+    "static/media/TopAdjectives.csv": "/parse/static/media/TopAdjectives.db69a4cc8eaadb28667c.csv",
+    "static/media/TopNouns.csv": "/parse/static/media/TopNouns.9e89e8fe1e3285c91127.csv",
+    "static/media/TopAdverbs.csv": "/parse/static/media/TopAdverbs.bb0c894b2af251a108c8.csv",
+    "static/media/TopPronouns.csv": "/parse/static/media/TopPronouns.3fb7301539af267240c1.csv",
+    "static/media/TopPrepositions.csv": "/parse/static/media/TopPrepositions.3fbab563a5c521875930.csv",
     "index.html": "/parse/index.html",
     "main.e9122a5f.css.map": "/parse/static/css/main.e9122a5f.css.map",
-    "main.a0f11a2d.js.map": "/parse/static/js/main.a0f11a2d.js.map"
+    "main.2825e13f.js.map": "/parse/static/js/main.2825e13f.js.map"
   },
   "entrypoints": [
     "static/css/main.e9122a5f.css",
-    "static/js/main.a0f11a2d.js"
+    "static/js/main.2825e13f.js"
   ]
 }
