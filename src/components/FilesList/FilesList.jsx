@@ -5,12 +5,13 @@ import ApiGetFile from 'services/api';
 const FilesList = ({ setNewFile }) => {
   const handleClick = async ({ name, link }) => {
     const data = await ApiGetFile(link);
-    // setNewFile(prev => {
-    //   return prev?.name !== name ? { name, link } : prev;
-    // });
-    setNewFile({
-      name,
-      data,
+    setNewFile(prev => {
+      return prev?.name !== name
+        ? {
+            name,
+            data,
+          }
+        : prev;
     });
   };
 
