@@ -4,9 +4,9 @@ import Box from 'components/Box';
 import FileLoader from 'components/FileLoader';
 import FilesList from 'components/FilesList';
 import IconButton from 'components/IconButton';
-import {} from './Menu.styled';
+import { FileName } from './Menu.styled';
 
-const Menu = ({ setNewFile }) => {
+const Menu = ({ setNewFile, fileName }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -23,6 +23,7 @@ const Menu = ({ setNewFile }) => {
       <IconButton onClick={() => setIsOpen(!isOpen)}>
         <BsMenuUp size={28} color="inherit" />
       </IconButton>
+      <FileName>{fileName}</FileName>
       {isOpen && (
         <Box
           position="absolute"

@@ -60,6 +60,8 @@ const App = () => {
 
   return (
     <Box
+      display="flex"
+      flexDirection="column"
       width="100vw"
       height="100vh"
       fontFamily="body"
@@ -69,15 +71,18 @@ const App = () => {
       color="text"
       bg="background"
     >
-      <Menu setNewFile={setNewFile} />
+      <Menu setNewFile={setNewFile} fileName={newFile?.name} />
 
       {state ? (
         <Question state={state} setState={setState} />
       ) : (
         <h3
           style={{
-            textAlign: 'center',
-            marginTop: '10%',
+            display: 'inline-flex',
+            margin: '10% auto',
+            padding: '80px',
+            border: '3px solid #303135',
+            borderRadius: '12px',
           }}
         >
           Choose an exercise to get started.

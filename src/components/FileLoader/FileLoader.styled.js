@@ -19,4 +19,8 @@ export const ButtonLoader = styled.label`
     font-size: ${p => p.theme.fontSizes[5]}px;
     margin-left: ${p => p.theme.space[2]}px;
   }
+
+  @media screen and (max-width: 400px) {
+    display: none;
+  }
 `;
