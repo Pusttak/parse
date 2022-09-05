@@ -1,4 +1,4 @@
-import {} from './FilesList.styled';
+import { List, File } from './FilesList.styled';
 import { dataList } from 'data';
 import ApiGetFile from 'services/api';
 
@@ -15,19 +15,19 @@ const FilesList = ({ setNewFile }) => {
   };
 
   return (
-    <ul>
+    <List>
       {dataList.map(({ name, link }) => (
         <li key={name}>
-          <button
+          <File
             type="button"
             name={name}
             onClick={() => handleClick({ name, link })}
           >
             {name}
-          </button>
+          </File>
         </li>
       ))}
-    </ul>
+    </List>
   );
 };
 

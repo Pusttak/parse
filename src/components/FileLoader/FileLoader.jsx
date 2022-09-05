@@ -4,8 +4,9 @@ import { ButtonLoader } from './FileLoader.styled';
 
 const REGEX = new RegExp('(.*?).(csv)$', 'i');
 
-const FileLoader = ({ setNewFile }) => {
+const FileLoader = ({ setNewFile, setIsOpen }) => {
   function handleFile(e) {
+    setIsOpen(false);
     const uploadedFile = e.target.files[0];
 
     if (uploadedFile && REGEX.test(uploadedFile.name)) {

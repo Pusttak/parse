@@ -9,6 +9,13 @@ const App = () => {
   const [state, setState] = useState(null);
 
   useEffect(() => {
+    const localFile = localStorage.getItem('currentFile');
+    if (localFile) {
+      setNewFile(JSON.parse(localFile));
+    }
+  }, []);
+
+  useEffect(() => {
     if (newFile) {
       const localData = localStorage.getItem('appState');
       if (localData) {
@@ -39,6 +46,7 @@ const App = () => {
 
   useEffect(() => {
     if (state) {
+      localStorage.setItem('currentFile', JSON.stringify(newFile));
       const localState = JSON.parse(localStorage.getItem('appState'));
       localStorage.setItem(
         'appState',
@@ -66,7 +74,14 @@ const App = () => {
       {state ? (
         <Question state={state} setState={setState} />
       ) : (
-        'Choose an exercise to get started.'
+        <h3
+          style={{
+            textAlign: 'center',
+            marginTop: '10%',
+          }}
+        >
+          Choose an exercise to get started.
+        </h3>
       )}
     </Box>
   );
